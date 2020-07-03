@@ -1,0 +1,57 @@
+body {
+	background-color: #eeeeee;
+}
+
+
+#gameBoard {
+	width: 600px;
+	height: 550px;
+	margin: 0 auto;
+}
+
+#msgArea {
+	padding: 15px;
+	font-family: sans-serif;
+	font-size: 30px;
+	text-align: center;
+	background-color: #607681;
+	color: #fff;
+}
+
+#gameSquares {
+	height: 500px;
+	display: flex;
+	flex-wrap: wrap;
+	padding: 25px;
+	box-sizing: border-box;
+}
+
+.indivSquare {
+	width: 33.33%;
+	height: 33.33%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	box-sizing: border-box;
+	font-size: 75px;
+	text-transform: uppercase;
+	font-family: sans-serif;
+	cursor: pointer;
+	color: #3a4756;
+}
+
+.indivSquare.displayWin {
+	color: #629d62;
+}
+
+.indivSquare:hover {
+	background-color: #deded9;
+}
+
+.indivSquare:nth-child(-n + 6) {
+	border-bottom: 10px solid #607681;
+}
+.indivSquare:nth-child(3n + 1),
+.indivSquare:nth-child(3n + 2) {
+	border-right: 10px solid #607681;
+}

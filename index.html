@@ -1,0 +1,91 @@
+<DOCTYPE! html>
+<html lang="en">
+<head>
+	<meta charset="uft-8" />
+	<title>Tic Tac Toe by Faith McQueen</title>
+	<link rel="stylesheet" href="css/style.css" />
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	<script src="js/square.js"></script>
+	<script src="js/game.js"></script>
+</head>
+<body>
+	<!-- Create a div to hold the entire game -->
+	<div id="gameBoard">
+
+		<!-- Create a div that will hold the message for players. Status of game will be output to this section -->
+		<div id="msgArea">
+
+			<!-- Print out the message using two curly braces. Source for syntax: https://vuejs.org/v2/guide/syntax.html -->
+			{{ outMsg }}
+
+		</div>
+
+		<!-- Create a div that will hold all of our squares, which will make up the tic tac toe board -->
+		<div id="gameSquares">
+
+
+			<!-- EXPLANATION OF NEXT DIV
+				
+				Need to render our array (squares) onto our page. We can do this by calling the array using v-for. We need to pass through the item we are rendering, and the index of the array. This will create 9 squares, as our array has 9 values that we are looping through.
+				Source for v-for: https://vuejs.org/v2/guide/list.html
+
+				Next we need to set up a listener for the onclick action of a square. v-on will listen, for the click, and on that click will call our makeMove function. We call that function through our currentGame, which works with the constructor() function. When we call makeMove, we also need to pass through which index we are in, as that function expects a parameter. 
+				Source for v-on: https://vuejs.org/v2/guide/events.html
+
+				
+				Next, we need to add our "displayWin" class if the game has been won. We need to bind displayWin to our winningSquare variable, held in our Square() class. This will only show if winningSquare is true. 
+				Sources: https://www.sitepoint.com/conditionally-applying-css-class-vue-js/, https://vuejs.org/v2/guide/class-and-style.html
+
+			-->
+			<div v-for="(square, i) in squares" v-on:click="currentGame.makeMove(i)" v-bind:class="{ displayWin: square.winningSquare }" class="indivSquare">
+
+				<!-- what is the value of the square? We need to print that into our gameboard -->
+
+				{{ square.value }}
+
+			</div> <!-- end indivSquare -->
+		</div> <!-- end gameSquares -->
+	</div> <!-- end gameBoard -->
+	<script>
+		
+		//we need to create a new game by calling our Game() class
+		let currentGame = new Game();
+
+		//To start the Vue application, we need to create a new Vue instance and call the Vue function  
+		let gameVue = new Vue ({
+
+			//Call the data object that Vue will be updating as we play the game. This is the instance of our new Game() class
+			data: currentGame,
+
+			//We need to tell Vue what element we are working with. This is our gameBoard div that wraps around all game elements, as the app will be manipulating everything inside of the board
+			el: '#gameBoard',
+
+
+			//We need to create a function that will print out the necessary information as game play happens. 
+			// Source for computed properties: https://vuejs.org/v2/guide/computed.html
+			computed: {
+
+				outMsg: function(){
+
+					//is the game currently in progress?
+					if (this.inProgress){
+						return 'It\'s ' + this.currentTurn + '\'s turn!';
+					}
+
+					//is there a winner?
+					if (this.winner) {
+						return 'Congratulations, ' + this.winner + '! You win!';
+					}
+
+					//is there a tie game? i.e. no winner, no game in progress
+					if (!this.winner && !this.inProgress) {
+						return 'Uh, oh! Cat\'s game!';
+					}
+
+				} //end outMsg
+			} //end computed
+
+		}); //end gameVue
+	</script>
+</body>
+</html>
